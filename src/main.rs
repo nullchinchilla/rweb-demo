@@ -14,6 +14,7 @@ async fn fallible() -> DynReply {
     .await
 }
 
+// the reusable helper function
 async fn generic_fallible<R: Reply + 'static>(
     f: impl Future<Output = anyhow::Result<R>>,
 ) -> DynReply {
