@@ -3,7 +3,7 @@ use std::{collections::HashMap, convert::Infallible};
 
 /// a fallible endpoint that fails randomly half the time
 #[get("/fallible")]
-async fn fallible() -> Result<Box<dyn Reply>, Infallible> {
+async fn fallible() -> DynReply {
     generic_fallible(async {
         // this async block just needs to return anyhow::Result<R>, where R is some type that implements Reply
         if fastrand::bool() {
