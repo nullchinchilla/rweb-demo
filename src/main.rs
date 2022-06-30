@@ -16,7 +16,7 @@ async fn fallible() -> Result<Box<dyn Reply>, Infallible> {
 
 async fn generic_fallible<R: Reply + 'static>(
     f: impl Future<Output = anyhow::Result<R>>,
-) -> Result<Box<dyn Reply>, Infallible> {
+) -> DynReply {
     match f.await {
         Ok(res) => Ok(Box::new(res)),
         Err(err) => {
@@ -29,6 +29,8 @@ async fn generic_fallible<R: Reply + 'static>(
         }
     }
 }
+
+type DynReply = Result<Box<dyn Reply>, Infallible>;
 
 #[tokio::main]
 async fn main() {
